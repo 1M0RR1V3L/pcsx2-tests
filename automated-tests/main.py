@@ -9,6 +9,7 @@ PCSX2_PATH = "/home/havillon/Downloads/pcsx2-v2.4.0-linux-appimage-x64-Qt.AppIma
 ISO_PATH = "/home/havillon/Downloads/Mario Collection/Mario Collection.ISO"
 REFERENCE_IMAGE = "/home/havillon/Documents/UFC/V_e_V/automatizados/reference.png"
 
+
 class TestPCSX2Automation:
     def setup_method(self):
         """Setup: Clean start of the application"""
@@ -23,12 +24,12 @@ class TestPCSX2Automation:
 
     def test_game_boots_successfully(self):
         """TC01: Verify game loads to title screen"""
-       
+
         print("Waiting for emulation to reach title screen...")
-        time.sleep(15) 
+        time.sleep(15)
 
         location = pyautogui.locateOnScreen(REFERENCE_IMAGE, confidence=0.8, grayscale=True)
-        
+
         if location:
             print(f"Success! Title screen found at: {location}")
             assert True
