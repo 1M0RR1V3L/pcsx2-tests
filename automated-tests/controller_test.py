@@ -114,3 +114,31 @@ class TestPCSX2Controllers:
 
         pyautogui.screenshot("evidencia_CT012_sucesso.png")
         pyautogui.press('esc')
+
+    def test_ct016_auto_mapping_keyboard(self):
+        """CT016: Mapeamento Automático (Keyboard)"""
+        self.open_controllers_menu()
+
+        # 1. Garante que estamos na Aba 1 (padrão para Auto Map)
+        if not self.find_and_click("port1_tab.png", "Aba Port 1", confidence=0.9):
+            pytest.fail("Falha Crítica: Não entrou na Aba Port 1")
+
+        # 2. Clica no botão 'Automatic Mapping'
+        # wait=1.5 é importante para dar tempo do menu dropdown desenrolar
+        if not self.find_and_click("auto_map.png", "Botão Automatic Mapping", wait=1.5):
+            pytest.fail("Botão 'Automatic Mapping' não encontrado (Verifique auto_map.png)")
+
+        # 3. Seleciona a opção 'Keyboard' na lista suspensa
+        # Se ele clicar no lugar errado aqui, tente adicionar offset_y=5 ou offset_x=5
+        if not self.find_and_click("keyboard.png", "Opção Keyboard na lista", confidence=0.8):
+            pytest.fail("Opção 'Keyboard' não encontrada na lista (Verifique keyboard.png)")
+
+        # 4. Pausa para verificar visualmente se os campos foram preenchidos
+        print("Aguardando preenchimento automático...")
+        time.sleep(2.0)
+
+        # 5. Evidência do mapeamento automático
+        pyautogui.screenshot("evidencia_CT016_automap.png")
+
+        # Fecha
+        pyautogui.press('esc')
