@@ -101,10 +101,8 @@ class TestPCSX2Controllers:
         pyautogui.press('down')
         time.sleep(0.5)
         pyautogui.press('enter')
-        time.sleep(1.5)  # Espera a aba carregar visualmente
+        time.sleep(1.5)
 
-
-        # Configura D-Pad Up (Player 2)
         if not self.find_and_click("dpad_up_btn.png", "D-Pad Up P2", offset_y=15):
             pytest.fail("Botão D-Pad Up (P2) não encontrado - Verifique se a aba trocou corretamente")
 
@@ -119,26 +117,41 @@ class TestPCSX2Controllers:
         """CT016: Mapeamento Automático (Keyboard)"""
         self.open_controllers_menu()
 
-        # 1. Garante que estamos na Aba 1 (padrão para Auto Map)
         if not self.find_and_click("port1_tab.png", "Aba Port 1", confidence=0.9):
             pytest.fail("Falha Crítica: Não entrou na Aba Port 1")
 
-        # 2. Clica no botão 'Automatic Mapping'
-        # wait=1.5 é importante para dar tempo do menu dropdown desenrolar
         if not self.find_and_click("auto_map.png", "Botão Automatic Mapping", wait=1.5):
             pytest.fail("Botão 'Automatic Mapping' não encontrado (Verifique auto_map.png)")
 
-        # 3. Seleciona a opção 'Keyboard' na lista suspensa
-        # Se ele clicar no lugar errado aqui, tente adicionar offset_y=5 ou offset_x=5
         if not self.find_and_click("keyboard.png", "Opção Keyboard na lista", confidence=0.8):
             pytest.fail("Opção 'Keyboard' não encontrada na lista (Verifique keyboard.png)")
 
-        # 4. Pausa para verificar visualmente se os campos foram preenchidos
         print("Aguardando preenchimento automático...")
         time.sleep(2.0)
 
-        # 5. Evidência do mapeamento automático
         pyautogui.screenshot("evidencia_CT016_automap.png")
 
-        # Fecha
+        pyautogui.press('esc')
+
+    def test_ct017_auto_mapping_gamepad(self):
+        """CT017: Mapeamento Automático de Dispositivo (Gamepad)"""
+        self.open_controllers_menu()
+
+        if not self.find_and_click("port1_tab.png", "Aba Port 1", confidence=0.9):
+            pytest.fail("Falha Crítica: Não entrou na Aba Port 1")
+
+        print("Abrindo menu de Mapeamento Automático...")
+        if not self.find_and_click("auto_map.png", "Botão Automatic Mapping"):
+            pytest.fail("Botão 'Automatic Mapping' não encontrado. Verifique a imagem auto_mapping_btn.png.")
+
+        time.sleep(1.0)
+
+        print("Procurando o dispositivo na lista...")
+        if not self.find_and_click("auto_controller.png", "Opção do Controle (SDL-4)", confidence=0.8, offset_y=5):
+            pytest.fail("A opção do controle 'auto_controller.png' não apareceu na lista ou o menu fechou.")
+
+        time.sleep(1.5)
+        print("Capturando evidência do preenchimento...")
+        pyautogui.screenshot("evidencia_CT017_auto_mapping.png")
+
         pyautogui.press('esc')
