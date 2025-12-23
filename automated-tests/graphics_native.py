@@ -100,7 +100,7 @@ class TestPCSX2Graphics:
         print(f"Tempo de Skip ({timeout}s) finalizado.")
         return True
 
-    def test_ct008_resolution_4k_gameplay(self):
+    def test_ct009_resolution_4k_gameplay(self):
         """CT008: Aumento de resolução para 4k/6x"""
 
         print("Configurando vídeo via teclado...")
